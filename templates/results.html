@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты опроса</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="results-container">
+        <h2>Спасибо за участие!</h2>
+        <div class="answers">
+            <p><strong>1. Предпочитаемый язык:</strong> <span class="highlight">%q1%</span></p>
+            <p><strong>2. Частота программирования:</strong> <span class="highlight" id="frequency-text">%q2%</span></p>
+        </div>
+        <div class="button-container">
+            <a href="/" class="btn btn-primary">Вернуться на главную</a>
+        </div>
+    </div>
+
+    <script>
+        // Преобразуем числовое значение в текстовое описание
+        document.addEventListener('DOMContentLoaded', function() {
+            const frequencyElement = document.getElementById('frequency-text');
+            if (frequencyElement) {
+                const frequencyValue = frequencyElement.textContent.trim();
+                const frequencyMap = {
+                    '1': 'Очень редко',
+                    '2': 'Несколько раз в месяц',
+                    '3': 'Раз в неделю',
+                    '4': 'Несколько раз в неделю',
+                    '5': 'Каждый день'
+                };
+                
+                if (frequencyMap[frequencyValue]) {
+                    frequencyElement.textContent = frequencyMap[frequencyValue];
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Опрос</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="survey-container">
+        <h2>Опрос программиста</h2>
+        <form method="POST" action="/submit-survey">
+            <div class="question">
+                <label class="question-title">1. Какой язык программирования вы предпочитаете?</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="q1" value="C" required>
+                        <span class="radio-label">C</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="q1" value="Python">
+                        <span class="radio-label">Python</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="q1" value="JavaScript">
+                        <span class="radio-label">JavaScript</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="q1" value="Другой">
+                        <span class="radio-label">Другой</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="question">
+                <label class="question-title">2. Как часто вы программируете?</label>
+                <div class="slider-container">
+                    <input type="range" id="q2" name="q2" min="1" max="5" step="1" value="3" required>
+                    <div class="slider-labels">
+                        <span>Очень редко</span>
+                        <span>Раз в неделю</span>
+                        <span>Каждый день</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
