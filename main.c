@@ -7,10 +7,10 @@
 #include <alloca.h>
 
 enum {
-    ERR_OK = 0,
-    ERR_MISSING_ENV = 1,
+    ERR_OK                  = 0,
+    ERR_MISSING_ENV         = 1,
     ERR_INVALID_CREDENTIALS = 2,
-    ERR_FILE_NOT_FOUND = 3
+    ERR_FILE_NOT_FOUND      = 3
 };
 
 static bool authenticated = false;
@@ -32,12 +32,14 @@ static void handle_logout(struct mg_connection *c) {
     free(response);
 }
 
-static void handle_login(struct mg_connection *c, struct mg_http_message *hm) {
+static void handle_login(struct mg_connection *c,
+                         struct mg_http_message *hm) {
     char username[100], password[100];
     const char *expected_user = getenv("LOGIN_USER");
     const char *expected_pass = getenv("LOGIN_PASS");
 
-    if (!expected_user || !expected_pass) {
+    if (!expected_user ||
+        !expected_pass) {
         char *response = read_file(PATH_ERROR_HTML);
         mg_http_reply(c, 200, CONTENT_TYPE_HTML, "%s", response);
         free(response);
@@ -47,7 +49,8 @@ static void handle_login(struct mg_connection *c, struct mg_http_message *hm) {
     mg_http_get_var(&hm->body, "username", username, sizeof(username));
     mg_http_get_var(&hm->body, "password", password, sizeof(password));
 
-    if (strcmp(username, expected_user) == 0 && strcmp(password, expected_pass) == 0) {
+    if (strcmp(username, expected_user) == 0 &&
+        strcmp(password, expected_pass) == 0) {
         authenticated = true;
         char *response = read_file(PATH_SUCCESS_HTML);
         mg_http_reply(c, 200, CONTENT_TYPE_HTML, "%s", response);
@@ -59,7 +62,8 @@ static void handle_login(struct mg_connection *c, struct mg_http_message *hm) {
     }
 }
 
-static void handle_survey_submission(struct mg_connection *c, struct mg_http_message *hm) {
+static void handle_survey_submission(struct mg_connection *c,
+                                     struct mg_http_message *hm) {
     char q1[100], q2[100];
     mg_http_get_var(&hm->body, "q1", q1, sizeof(q1));
     mg_http_get_var(&hm->body, "q2", q2, sizeof(q2));
@@ -89,7 +93,10 @@ static void handle_survey_submission(struct mg_connection *c, struct mg_http_mes
     }
 }
 
-static void main_fun(struct mg_connection *c, int ev, void *ev_data, void *fn_data) {
+static void main_fun(struct mg_connection *c,
+                     int    ev,
+                     void   *ev_data, 
+                     void   *fn_data) {
     (void)fn_data;
     
     if (ev == MG_EV_HTTP_MSG) {
