@@ -5,6 +5,27 @@
     <title>Опрос</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .other-input-container {
+            margin-top: 0.8rem;
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .other-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            color: var(--text);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        .other-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.2);
+        }
+    </style>
 </head>
 <body>
     <div class="survey-container">
@@ -26,9 +47,12 @@
                         <span class="radio-label">JavaScript</span>
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q1" value="Другой">
+                        <input type="radio" name="q1" value="Другой" id="other-radio">
                         <span class="radio-label">Другой</span>
                     </label>
+                </div>
+                <div class="other-input-container" id="other-input-container">
+                    <input type="text" name="q1-other" class="other-input" placeholder="Укажите ваш вариант" id="other-input">
                 </div>
             </div>
 
@@ -49,5 +73,40 @@
             </div>
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const otherRadio = document.getElementById('other-radio');
+            const otherInputContainer = document.getElementById('other-input-container');
+            const otherInput = document.getElementById('other-input');
+            const allRadios = document.querySelectorAll('input[name="q1"]');
+            const form = document.querySelector('form');
+
+            allRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.id === 'other-radio' && this.checked) {
+                        otherInputContainer.style.display = 'block';
+                        otherInput.required = true;
+                    } else {
+                        otherInputContainer.style.display = 'none';
+                        otherInput.required = false;
+                    }
+                });
+            });
+
+            form.addEventListener('submit', function(e) {
+                if (otherRadio.checked && otherInput.value.trim() === '') {
+                    e.preventDefault();
+                    alert('Пожалуйста, укажите ваш вариант языка программирования');
+                    otherInput.focus();
+                }
+            });
+
+            if (otherRadio.checked) {
+                otherInputContainer.style.display = 'block';
+                otherInput.required = true;
+            }
+        });
+    </script>
 </body>
 </html>

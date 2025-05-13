@@ -10,7 +10,7 @@
     <div class="results-container">
         <h2>Спасибо за участие!</h2>
         <div class="answers">
-            <p><strong>1. Предпочитаемый язык:</strong> <span class="highlight">%q1%</span></p>
+            <p><strong>1. Предпочитаемый язык:</strong> <span class="highlight" id="language-text">%q1%</span></p>
             <p><strong>2. Частота программирования:</strong> <span class="highlight" id="frequency-text">%q2%</span></p>
         </div>
         <div class="button-container">
@@ -19,8 +19,19 @@
     </div>
 
     <script>
-        // Преобразуем числовое значение в текстовое описание
         document.addEventListener('DOMContentLoaded', function() {
+            const languageElement = document.getElementById('language-text');
+            if (languageElement) {
+                const languageValue = languageElement.textContent.trim();
+                if (languageValue === 'Другой') {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const otherLanguage = urlParams.get('q1-other');
+                    if (otherLanguage) {
+                        languageElement.textContent = otherLanguage;
+                    }
+                }
+            }
+
             const frequencyElement = document.getElementById('frequency-text');
             if (frequencyElement) {
                 const frequencyValue = frequencyElement.textContent.trim();
